@@ -4,6 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVGN Systems | Sovereign OS</title>
+    <meta name="description" content="The world's first off-grid AI, bio-calibrated to your DNA and estate. Ensure your family's continuity without reliance on the cloud, the grid, or the government. Asset Class: Non-Correlated.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://svgnsystems.com/">
+    <meta property="og:title" content="SVGN Systems | Sovereign OS">
+    <meta property="og:description" content="When the system fails, you become the system. The ultimate $25,000 bio-integrated survival intelligence.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://svgnsystems.com/">
+    <meta property="twitter:title" content="SVGN Systems | Sovereign OS">
+    <meta property="twitter:description" content="When the system fails, you become the system. The ultimate $25,000 bio-integrated survival intelligence.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200">
+
+    <!-- Favicon (Inline SVG) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230a0a0a%22/><rect x=%2220%22 y=%2220%22 width=%2260%22 height=%2260%22 fill=%22none%22 stroke=%22%23C6A87C%22 stroke-width=%225%22/><rect x=%2245%22 y=%2245%22 width=%2210%22 height=%2210%22 fill=%22%23C6A87C%22/></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -603,11 +622,19 @@
                         <span class="text-xs text-gray-500 font-data">I UNDERSTAND A $2,500 NON-REFUNDABLE DEPOSIT IS REQUIRED TO START BIO-SEQUENCING.</span>
                     </div>
                     
-                    <button class="w-full bg-gold-primary hover:bg-white text-black font-bold py-6 font-data tracking-widest transition-colors mt-8">
+                    <button type="submit" id="submit-btn" class="w-full bg-gold-primary hover:bg-white text-black font-bold py-6 font-data tracking-widest transition-colors mt-8">
                         REQUEST INVITATION
                     </button>
                 </form>
                 
+                <div id="success-message" class="hidden mt-8 p-6 border border-gold-primary/30 bg-gold-primary/5 text-center">
+                    <div class="font-luxury text-xl text-white mb-2">TRANSMISSION SECURED</div>
+                    <div class="font-data text-xs text-gold-primary">
+                        YOUR KEY HAS BEEN LOGGED.<br>
+                        WAIT FOR ENCRYPTED SIGNAL (24-48H).
+                    </div>
+                </div>
+
                 <div class="mt-8 flex justify-center gap-8 opacity-50">
                     <div class="h-8 w-12 border border-white/20 flex items-center justify-center text-[10px] text-gray-400">VISA</div>
                     <div class="h-8 w-12 border border-white/20 flex items-center justify-center text-[10px] text-gray-400">BTC</div>
@@ -645,5 +672,23 @@
          <div>SYSTEM VERSION: 4.2.0</div>
       </div>
     </footer>
+    
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const msg = document.getElementById('success-message');
+            const form = this;
+            
+            // Simulate processing
+            btn.innerHTML = "ENCRYPTING DATA...";
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                form.classList.add('hidden');
+                msg.classList.remove('hidden');
+            }, 1500);
+        });
+    </script>
 </body>
 </html>

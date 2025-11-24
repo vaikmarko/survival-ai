@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVGN Systems | Sovereign OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=JetBrains+Mono:wght@100;300;400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'void': '#000000',
+              'bunker-dark': '#0a0a0a',
+              'bunker-panel': '#111111',
+              'gold-primary': '#C6A87C',
+              'gold-dim': '#5C4D35',
+              'hologram-cyan': '#00f3ff',
+              'alert-red': '#ff3333',
+              'marine-blue': '#0044ff',
+            },
+            fontFamily: {
+              'luxury': ['Cinzel', 'serif'],
+              'data': ['JetBrains Mono', 'monospace'],
+              'ui': ['Rajdhani', 'sans-serif'],
+            },
+            backgroundImage: {
+              'hex-pattern': "url('data:image/svg+xml,%3Csvg width=\"24\" height=\"40\" viewBox=\"0 0 24 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M0 40c5.523 0 10-4.477 10-10V10c0-5.523 4.477-10 10-10s10 4.477 10 10v20c0 5.523-4.477 10-10 10S0 35.523 0 30v10z\" fill=\"%231a1a1a\" fill-opacity=\"0.05\" fill-rule=\"evenodd\"/%3E%3C/svg%3E')",
+              'grid-precise': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)",
+            },
+            animation: {
+              'scan': 'scan 4s linear infinite',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'spin-slow': 'spin 12s linear infinite',
+            },
+            keyframes: {
+              scan: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #000000;
+        color: #e5e5e5;
+        overflow-x: hidden;
+      }
+      
+      /* Advanced UI Elements */
+      .hud-corner {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-color: #C6A87C;
+        border-style: solid;
+        transition: all 0.3s ease;
+      }
+      .hud-tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
+      .hud-tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
+      .hud-bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+      .hud-br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+      .panel-hover:hover .hud-corner {
+        width: 100%;
+        height: 100%;
+        border-color: #C6A87C;
+        background: rgba(198, 168, 124, 0.02);
+      }
+
+      .text-glow {
+        text-shadow: 0 0 20px rgba(198, 168, 124, 0.3);
+      }
+      
+      .crt-overlay {
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        background-size: 100% 2px, 3px 100%;
+        pointer-events: none;
+      }
+      
+      .marquee-container {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .marquee-content {
+        display: inline-block;
+        animation: marquee 60s linear infinite;
+      }
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333; 
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #C6A87C; 
+      }
+    </style>
+</head>
+  <body class="font-ui selection:bg-gold-primary selection:text-black crt-overlay">
+    
+    <!-- Scrolling Data Header -->
+    <div class="fixed top-0 w-full h-6 bg-bunker-panel border-b border-white/5 z-50 flex items-center">
+      <div class="marquee-container w-full font-data text-[9px] text-gray-600 tracking-widest">
+        <div class="marquee-content">
+          SYS.STATUS: ONLINE // ENCRYPTION: QUANTUM-RESISTANT // LATENCY: 0.0MS // BIO-LOCK: ACTIVE // SATELLITE: DISCONNECTED // AIR-GAP: CONFIRMED // POWER: 100% // DEPLOYMENT: GLOBAL // PROTOCOL: OMEGA // SECURITY LEVEL: 5 // DNA SEQUENCER: READY // PSYCH-EVAL: REQUIRED // 
+          SYS.STATUS: ONLINE // ENCRYPTION: QUANTUM-RESISTANT // LATENCY: 0.0MS // BIO-LOCK: ACTIVE // SATELLITE: DISCONNECTED // AIR-GAP: CONFIRMED // POWER: 100% // DEPLOYMENT: GLOBAL // PROTOCOL: OMEGA // SECURITY LEVEL: 5 // DNA SEQUENCER: READY // PSYCH-EVAL: REQUIRED //
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="fixed top-6 w-full z-40 bg-void/90 backdrop-blur-xl border-b border-white/10">
+      <div class="max-w-[1800px] mx-auto px-8 h-24 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 border border-gold-primary relative flex items-center justify-center">
+            <div class="absolute inset-1 border border-white/20"></div>
+            <div class="w-2 h-2 bg-gold-primary"></div>
+          </div>
+          <div>
+            <div class="font-luxury font-black text-2xl tracking-[0.2em] text-white leading-none">SVGN<span class="text-gold-primary">SYSTEMS</span></div>
+            <div class="font-data text-[0.6rem] text-gold-dim tracking-[0.4em] mt-1">SOVEREIGN OS</div>
+          </div>
+        </div>
+        
+        <div class="hidden xl:flex gap-16 font-data text-xs tracking-[0.2em] text-gray-500">
+          <a href="#philosophy" class="hover:text-gold-primary transition-colors">PHILOSOPHY</a>
+          <a href="#bio-integration" class="hover:text-gold-primary transition-colors flex items-center gap-2">
+            <span class="w-1 h-1 bg-gold-primary rounded-full animate-pulse"></span> BIO-INTEGRATION
+          </a>
+          <a href="#intelligence" class="hover:text-gold-primary transition-colors">INTELLIGENCE</a>
+          <a href="#protocol" class="hover:text-gold-primary transition-colors">PROTOCOL</a>
+        </div>
+
+        <a href="#application" class="relative group overflow-hidden bg-white/5 px-8 py-3 border border-gold-primary/30 hover:border-gold-primary transition-all">
+          <span class="font-data text-xs text-gold-primary tracking-[0.2em] group-hover:text-white relative z-10">INITIATE APPLICATION</span>
+          <div class="absolute inset-0 bg-gold-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center pt-32 overflow-hidden bg-void">
+      <div class="absolute inset-0 bg-hex-pattern opacity-20"></div>
+      
+      <!-- Animated Radar Background -->
+      <div class="absolute right-[-10%] top-[20%] w-[800px] h-[800px] border border-white/5 rounded-full opacity-20 animate-[spin_60s_linear_infinite]"></div>
+      <div class="absolute right-[-10%] top-[20%] w-[600px] h-[600px] border border-white/5 rounded-full opacity-20 animate-[spin_40s_linear_reverse_infinite]"></div>
+      
+      <div class="max-w-[1800px] mx-auto px-8 relative z-10 w-full grid lg:grid-cols-12 gap-12">
+        <!-- Text Content -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div class="inline-flex items-center gap-3 border border-white/10 bg-white/5 px-4 py-2 w-fit mb-8 backdrop-blur-sm">
+            <span class="w-2 h-2 bg-gold-primary animate-pulse"></span>
+            <span class="font-data text-xs text-gray-300 tracking-widest">ASSET CLASS: NON-CORRELATED</span>
+          </div>
+          
+          <h1 class="font-luxury text-5xl md:text-7xl xl:text-8xl font-bold text-white leading-[0.9] mb-8 text-glow">
+            WHEN THE<br>SYSTEM FAILS,<br>
+            <span class="text-gold-primary">YOU BECOME<br>THE SYSTEM.</span>
+          </h1>
+          
+          <p class="font-ui text-xl md:text-2xl text-gray-400 max-w-2xl mb-12 font-light leading-relaxed">
+            Wealth protects you today. This protects you tomorrow. <br>
+            The world's first <strong>off-grid AI</strong>, bio-calibrated to your DNA and estate. Ensure your family's continuity without reliance on the cloud, the grid, or the government.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-6">
+            <a href="#application" class="bg-gold-primary text-black px-10 py-5 font-data font-bold text-sm tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-3">
+              REQ. ALLOCATION ($25,000)
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </a>
+            <a href="#philosophy" class="border border-white/20 text-white px-10 py-5 font-data font-bold text-sm tracking-widest hover:border-gold-primary hover:text-gold-primary transition-colors text-center">
+              WHY YOU NEED THIS
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Visual / HUD -->
+        <div class="lg:col-span-5 relative h-[600px] hidden lg:block">
+           <div class="absolute inset-0 border border-white/10 bg-bunker-panel/50 backdrop-blur-sm p-8 flex flex-col justify-between">
+              <!-- HUD Top -->
+              <div class="flex justify-between border-b border-white/10 pb-4">
+                <div class="font-data text-xs text-gold-primary">
+                  TARGET: SUBJECT ALPHA<br>
+                  GENOME: SEQUENCED
+                </div>
+                <div class="text-right font-data text-xs text-hologram-cyan animate-pulse">
+                  UPLINK: SECURE
+                </div>
+              </div>
+              
+              <!-- Center Graphic -->
+              <div class="relative flex-1 flex items-center justify-center">
+                <div class="w-64 h-64 border border-gold-primary/30 rounded-full flex items-center justify-center relative animate-float">
+                   <!-- Inner rings -->
+                   <div class="absolute inset-4 border border-white/10 rounded-full border-dashed animate-spin-slow"></div>
+                   <div class="absolute inset-12 border border-white/10 rounded-full"></div>
+                   
+                   <!-- DNA Icon Representation -->
+                   <div class="flex gap-1 h-32 items-center">
+                     <div class="w-1 bg-gold-primary h-full opacity-20"></div>
+                     <div class="w-1 bg-gold-primary h-[80%] opacity-40"></div>
+                     <div class="w-1 bg-gold-primary h-[60%] opacity-60"></div>
+                     <div class="w-1 bg-gold-primary h-[40%] opacity-80"></div>
+                     <div class="w-1 bg-gold-primary h-[20%] opacity-100"></div>
+                   </div>
+                </div>
+                
+                <!-- Data Points around graphic -->
+                <div class="absolute top-1/4 left-0 font-data text-[10px] text-gray-500">
+                  [PHARMACOGENOMICS]<br>
+                  CYP2D6: POOR METABOLIZER<br>
+                  ADJUST DOSAGE: -20%
+                </div>
+                <div class="absolute bottom-1/4 right-0 font-data text-[10px] text-gray-500 text-right">
+                  [PSYCH-PROFILE]<br>
+                  CORTISOL RESPONSE: HIGH<br>
+                  INTERVENTION: CALMING
+                </div>
+              </div>
+
+              <!-- HUD Bottom -->
+              <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-4 font-data text-[10px] text-gray-500">
+                 <div>
+                   BATTERY A: 100%<br>
+                   BATTERY B: 100%
+                 </div>
+                 <div class="text-center">
+                   TEMP: 32°C<br>
+                   HUMIDITY: 45%
+                 </div>
+                 <div class="text-right text-gold-primary">
+                   AI CORE: IDLE
+                 </div>
+              </div>
+           </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- The Gap (Why $25k) -->
+    <section id="philosophy" class="py-32 bg-bunker-dark border-y border-white/5 relative">
+      <div class="max-w-6xl mx-auto px-8 text-center">
+        <h2 class="font-luxury text-3xl text-white mb-4">THE VULNERABILITY OF WEALTH</h2>
+        <p class="font-ui text-gray-500 max-w-2xl mx-auto mb-16">In a high-stakes crisis, your net worth makes you a target, not a survivor. The rules change instantly.</p>
+        
+        <div class="grid md:grid-cols-3 gap-12 text-left">
+          <div class="bg-white/5 p-8 border border-white/10">
+            <h3 class="font-ui text-gold-primary text-xl font-bold mb-4">1. THE KNOWLEDGE GAP</h3>
+            <p class="font-ui text-gray-400 leading-relaxed text-sm">
+              You have specialists for everything: doctors, lawyers, pilots. If communication fails, those specialists disappear. You are left with zero functional knowledge on how to treat a wound, purify water, or secure your perimeter.
+            </p>
+          </div>
+           <div class="bg-white/5 p-8 border border-white/10">
+            <h3 class="font-ui text-gold-primary text-xl font-bold mb-4">2. THE GENERIC TRAP</h3>
+            <p class="font-ui text-gray-400 leading-relaxed text-sm">
+              Standard survival books are written for the average person. They don't know your blood type. They don't know the security codes to your estate. They don't know your child needs insulin. Generic advice kills unique individuals.
+            </p>
+          </div>
+           <div class="bg-white/5 p-8 border border-white/10">
+            <h3 class="font-ui text-gold-primary text-xl font-bold mb-4">3. THE PSYCHOLOGICAL SHOCK</h3>
+            <p class="font-ui text-gray-400 leading-relaxed text-sm">
+              The fall from comfort to chaos causes "Executive Freeze." High-performers often hesitate when the context shifts. Our AI profiles your psychology to provide commands you will actually follow under duress.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio-Integration -->
+    <section id="bio-integration" class="py-32 bg-void relative overflow-hidden">
+      <!-- Background Elements -->
+      <div class="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-white/5 to-transparent pointer-events-none"></div>
+      
+      <div class="max-w-[1800px] mx-auto px-8">
+        <div class="mb-20">
+          <span class="font-data text-gold-primary tracking-[0.3em] text-xs">PHASE 1 & 2</span>
+          <h2 class="font-luxury text-5xl md:text-6xl text-white mt-4">CALIBRATION</h2>
+          <p class="font-ui text-gray-400 mt-4 max-w-xl">We do not ship a product. We onboard you into a protocol. Before you receive the device, we must map the user.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Card 1: DNA -->
+          <div class="bg-bunker-panel border border-white/10 p-10 relative group panel-hover">
+            <div class="hud-corner hud-tl"></div><div class="hud-corner hud-tr"></div>
+            <div class="hud-corner hud-bl"></div><div class="hud-corner hud-br"></div>
+            
+            <div class="font-data text-4xl text-white/20 mb-6">01</div>
+            <h3 class="font-luxury text-2xl text-white mb-4">PHARMACO-GENOMICS</h3>
+            <p class="font-ui text-gray-400 mb-8 min-h-[80px]">
+              We ship a DNA collection kit. Our lab sequences genes related to drug metabolism, nutritional absorption, and physical endurance.
+            </p>
+            <ul class="space-y-3 font-data text-xs text-gray-500">
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> MEDICATION COMPATIBILITY CHECK</li>
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> METABOLIC OPTIMIZATION</li>
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> INJURY RECOVERY PREDICTION</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Psych -->
+          <div class="bg-bunker-panel border border-white/10 p-10 relative group panel-hover">
+            <div class="hud-corner hud-tl"></div><div class="hud-corner hud-tr"></div>
+            <div class="hud-corner hud-bl"></div><div class="hud-corner hud-br"></div>
+
+            <div class="font-data text-4xl text-white/20 mb-6">02</div>
+            <h3 class="font-luxury text-2xl text-white mb-4">PSYCH-MAPPING</h3>
+            <p class="font-ui text-gray-400 mb-8 min-h-[80px]">
+              You undergo a remote evaluation with our operational psychologists. We profile your stress response (Fight/Flight/Freeze).
+            </p>
+            <ul class="space-y-3 font-data text-xs text-gray-500">
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> AI TONE CALIBRATION</li>
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> PANIC MITIGATION PROTOCOLS</li>
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> DECISION FATIGUE MANAGEMENT</li>
+            </ul>
+          </div>
+
+          <!-- Card 3: Asset -->
+          <div class="bg-bunker-panel border border-white/10 p-10 relative group panel-hover">
+            <div class="hud-corner hud-tl"></div><div class="hud-corner hud-tr"></div>
+            <div class="hud-corner hud-bl"></div><div class="hud-corner hud-br"></div>
+
+            <div class="font-data text-4xl text-white/20 mb-6">03</div>
+            <h3 class="font-luxury text-2xl text-white mb-4">ASSET INGESTION</h3>
+            <p class="font-ui text-gray-400 mb-8 min-h-[80px]">
+              Our engineers digitize your blueprints, inventory lists, and vehicle schematics into the model's vector database.
+            </p>
+            <ul class="space-y-3 font-data text-xs text-gray-500">
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> PROPERTY SCHEMATICS RAG</li>
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> INVENTORY TRACKING</li>
+              <li class="flex items-center gap-2"><span class="text-gold-primary">>></span> CUSTOM REPAIR GUIDES</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Expanded Knowledge Grid (Bento) -->
+    <section id="intelligence" class="py-32 bg-bunker-dark border-t border-white/5">
+      <div class="max-w-[1800px] mx-auto px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+          <div>
+             <span class="font-data text-gray-500 tracking-[0.3em] text-xs">DATABASE SIZE: 48TB</span>
+             <h2 class="font-luxury text-4xl text-white mt-2">CIVILIZATION RECOVERY SUITE</h2>
+          </div>
+          <div class="font-data text-right text-xs text-gray-600 hidden md:block">
+            UPDATING INDEX...<br>
+            VERIFIED SOURCES ONLY
+          </div>
+        </div>
+
+        <!-- Bento Grid Structure -->
+        <!-- 3 Rows High on Large Screens to accommodate 1 large item (left) and 3 levels of items (right) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 lg:grid-rows-3 gap-6 h-auto lg:h-[900px]">
+          
+          <!-- Medical: Left Half (Full Height - 3 Rows) -->
+          <div class="md:col-span-2 lg:col-span-6 lg:row-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group flex flex-col">
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
+             <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+             
+             <!-- Content -->
+             <div class="relative z-10 p-10 h-full flex flex-col justify-between">
+               <div class="flex justify-between items-start">
+                 <h3 class="font-luxury text-3xl text-white">ADVANCED BIOMEDICAL</h3>
+                 <span class="text-gold-primary font-data text-2xl animate-pulse">✚</span>
+               </div>
+               
+               <div class="mt-auto">
+                 <p class="text-gray-400 text-sm mb-8 leading-relaxed max-w-lg">
+                   Custom-trained on 12,000 surgical procedures. Features a built-in RAG system for field amputation, dental reconstruction, and synthesizing antibiotics from raw organic matter.
+                 </p>
+                 <div class="grid grid-cols-2 gap-3 font-data text-[11px] text-gray-500 tracking-wide">
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> REMOTE SURGERY GUIDE</div>
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> ANTIBIOTIC CULTIVATION</div>
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> DENTAL RECONSTRUCTION</div>
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> PSYCHOLOGICAL TRIAGE</div>
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> CHRONIC CARE MGMT</div>
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> HERBAL PHARMACOLOGY</div>
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> OBSTETRICS & DELIVERY</div>
+                   <div class="bg-black/40 border border-white/5 p-3 hover:border-gold-primary/30 transition-colors">>> FIELD SANITATION</div>
+                 </div>
+               </div>
+             </div>
+          </div>
+
+          <!-- Defense: Top Right Quadrant (Row 1) -->
+          <div class="md:col-span-2 lg:col-span-6 lg:row-span-1 bg-bunker-panel border border-white/10 relative overflow-hidden group">
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542259681-d2182e0d771b?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
+             <div class="relative z-10 p-8 h-full flex flex-col justify-between">
+               <div class="flex justify-between items-start">
+                 <h3 class="font-luxury text-2xl text-white">TACTICAL DEFENSE</h3>
+                 <span class="text-alert-red font-data text-xl">⌖</span>
+               </div>
+               <div class="flex gap-8 mt-4">
+                  <p class="text-gray-400 text-sm max-w-xs">Perimeter security engineering, counter-surveillance, drone operation/disabling, and ballistics trajectory calculation.</p>
+                  <div class="flex-1 grid grid-cols-2 gap-2 font-data text-[10px] text-gray-500">
+                    <div class="border-l border-alert-red/30 pl-2">COUNTER-DRONE OPS</div>
+                    <div class="border-l border-alert-red/30 pl-2">INFRARED MASKING</div>
+                    <div class="border-l border-alert-red/30 pl-2">PERIMETER TRAPS</div>
+                    <div class="border-l border-alert-red/30 pl-2">BALLISTICS CALC</div>
+                  </div>
+               </div>
+             </div>
+          </div>
+
+          <!-- The Quartet: Middle & Bottom Right -->
+          
+          <!-- Hydroponics (Row 2 Left) -->
+          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
+             <div class="relative z-10 p-6 h-full flex flex-col">
+               <div class="flex justify-between mb-4">
+                 <span class="font-luxury text-lg text-white">HYDROPONICS</span>
+                 <span class="font-data text-terminal-green text-xs">AUTO</span>
+               </div>
+               <p class="text-[11px] text-gray-500 font-data mb-3">Indoor yield optimization.</p>
+               <div class="mt-auto space-y-1 font-data text-[10px] text-gray-600">
+                 <div class="flex justify-between"><span>NUTRIENT MIX</span><span class="text-white">READY</span></div>
+                 <div class="flex justify-between"><span>SEED VAULT</span><span class="text-white">INDEXED</span></div>
+               </div>
+             </div>
+          </div>
+
+          <!-- Engineering (Row 2 Right) -->
+          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581092921461-eab62e97a782?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
+             <div class="relative z-10 p-6 h-full flex flex-col">
+               <div class="flex justify-between mb-4">
+                 <span class="font-luxury text-lg text-white">ENGINEERING</span>
+                 <span class="font-data text-gold-primary text-xs">MECH</span>
+               </div>
+               <p class="text-[11px] text-gray-500 font-data mb-3">Grid repair & Fabrication.</p>
+               <div class="mt-auto space-y-1 font-data text-[10px] text-gray-600">
+                 <div class="flex justify-between"><span>SCHEMATICS</span><span class="text-white">LOADED</span></div>
+                 <div class="flex justify-between"><span>3D PRINT</span><span class="text-white">STL</span></div>
+               </div>
+             </div>
+          </div>
+
+          <!-- Chemistry (Row 3 Left) -->
+          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
+             <div class="relative z-10 p-6 h-full flex flex-col">
+               <div class="flex justify-between mb-4">
+                 <span class="font-luxury text-lg text-white">CHEMISTRY</span>
+                 <span class="font-data text-hologram-cyan text-xs">SYNTH</span>
+               </div>
+               <p class="text-[11px] text-gray-500 font-data mb-3">Fuel & Water Stability.</p>
+               <div class="mt-auto space-y-1 font-data text-[10px] text-gray-600">
+                 <div class="flex justify-between"><span>SPECTROSCOPY</span><span class="text-white">ACTIVE</span></div>
+                 <div class="flex justify-between"><span>PURIFICATION</span><span class="text-white">99.9%</span></div>
+               </div>
+             </div>
+          </div>
+
+           <!-- Marine & Aviation (Row 3 Right) -->
+           <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1500930248553-70db0952bc51?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
+            <div class="relative z-10 p-6 h-full flex flex-col">
+              <div class="flex justify-between mb-4">
+                <span class="font-luxury text-lg text-white">MARINE & AVIATION</span>
+                <span class="font-data text-marine-blue text-xs">NAVAL</span>
+              </div>
+              <p class="text-[11px] text-gray-500 font-data mb-3">Navigation & Extraction.</p>
+              <div class="mt-auto space-y-1 font-data text-[10px] text-gray-600">
+                <div class="flex justify-between"><span>TIDE CHARTS</span><span class="text-white">GLOBAL</span></div>
+                <div class="flex justify-between"><span>ENGINE REPAIR</span><span class="text-white">DIESEL</span></div>
+              </div>
+            </div>
+         </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- The Device (Hardware) -->
+    <section class="py-32 bg-void relative border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-8 grid md:grid-cols-2 gap-16 items-center">
+           <div>
+              <div class="w-full aspect-[4/3] bg-bunker-panel border border-white/10 relative flex items-center justify-center">
+                  <!-- Abstract representation of the device -->
+                  <div class="w-[80%] h-[70%] bg-[#1a1a1a] border border-gray-800 rounded relative shadow-2xl">
+                      <!-- Screen -->
+                      <div class="absolute top-4 left-4 right-4 bottom-16 bg-black border border-gray-800 flex items-center justify-center overflow-hidden">
+                          <div class="font-data text-green-500 text-xs p-4 w-full h-full font-mono leading-none opacity-80">
+                             > SYSTEM BOOT...<br>
+                             > CHECKING BIO-SENSORS...<br>
+                             > USER RECOGNIZED.<br>
+                             > WELCOME, COMMANDER.<br>
+                             > _
+                          </div>
+                      </div>
+                      <!-- Buttons -->
+                      <div class="absolute bottom-4 left-4 right-4 flex justify-between">
+                          <div class="flex gap-2">
+                              <div class="w-8 h-8 bg-[#222] rounded-sm border border-white/5"></div>
+                              <div class="w-8 h-8 bg-[#222] rounded-sm border border-white/5"></div>
+                          </div>
+                          <div class="w-20 h-8 bg-black border border-gold-primary/50 flex items-center justify-center text-[8px] text-gold-primary font-data tracking-widest">
+                              AIR-GAP
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <!-- Specs Overlay -->
+                  <div class="absolute -right-12 top-10 bg-black/80 border border-white/20 p-4 backdrop-blur-md">
+                      <div class="font-data text-xs text-gold-primary mb-1">CPU</div>
+                      <div class="font-ui text-white text-sm">OCTA-CORE AI OPTIMIZED</div>
+                  </div>
+                  <div class="absolute -left-12 bottom-20 bg-black/80 border border-white/20 p-4 backdrop-blur-md">
+                      <div class="font-data text-xs text-gold-primary mb-1">BATTERY</div>
+                      <div class="font-ui text-white text-sm">DUAL HOT-SWAP (30HR)</div>
+                  </div>
+              </div>
+           </div>
+           <div>
+              <h2 class="font-luxury text-4xl text-white mb-6">HARDWARE: THE VAULT</h2>
+              <p class="font-ui text-gray-400 mb-8">
+                  The software lives inside a modified Panasonic Toughbook FZ-A3, encased in a custom Faraday cage. It is waterproof, dustproof, and drop-tested to military standards.
+              </p>
+              <div class="space-y-6">
+                  <div class="flex items-start gap-4">
+                      <div class="w-12 h-12 bg-white/5 flex items-center justify-center border border-white/10 font-luxury text-gold-primary">01</div>
+                      <div>
+                          <h4 class="text-white font-bold font-ui">TOTAL AIR-GAP SWITCH</h4>
+                          <p class="text-xs text-gray-500 mt-1 font-data">Hardware kill-switch for all radios. Zero emission. Zero tracking.</p>
+                      </div>
+                  </div>
+                  <div class="flex items-start gap-4">
+                      <div class="w-12 h-12 bg-white/5 flex items-center justify-center border border-white/10 font-luxury text-gold-primary">02</div>
+                      <div>
+                          <h4 class="text-white font-bold font-ui">SOLAR NATIVE</h4>
+                          <p class="text-xs text-gray-500 mt-1 font-data">Includes military-grade foldable solar array for indefinite runtime.</p>
+                      </div>
+                  </div>
+              </div>
+           </div>
+        </div>
+    </section>
+
+    <!-- Protocol / Application -->
+    <section id="protocol" class="py-32 bg-bunker-dark border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-8 text-center">
+            <h2 class="font-luxury text-4xl text-white mb-4">INITIATE ALLOCATION</h2>
+            <p class="font-ui text-gray-400 mb-12">
+                Due to the intensive nature of the Bio-Calibration process, we produce only 50 units per quarter.
+            </p>
+            
+            <div id="application" class="bg-bunker-panel border border-gold-primary/30 p-8 md:p-16 relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gold-primary"></div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-white/5 pb-8">
+                    <div class="text-left">
+                        <div class="font-luxury text-3xl text-white">THE SOVEREIGN</div>
+                        <div class="font-data text-xs text-gold-primary mt-2">COMPLETE SYSTEM</div>
+                    </div>
+                    <div class="text-right mt-4 md:mt-0">
+                        <div class="font-luxury text-4xl text-white">$25,000</div>
+                        <div class="font-data text-xs text-gray-500 mt-1">USD / BTC / ETH</div>
+                    </div>
+                </div>
+
+                <form class="space-y-6 text-left">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="font-data text-[10px] text-gold-primary tracking-widest mb-2 block">NAME</label>
+                            <input type="text" class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
+                        </div>
+                        <div>
+                            <label class="font-data text-[10px] text-gold-primary tracking-widest mb-2 block">OFFICIAL EMAIL</label>
+                            <input type="email" class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="font-data text-[10px] text-gold-primary tracking-widest mb-2 block">COUNTRY OF RESIDENCE (FOR LOGISTICS)</label>
+                        <input type="text" class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
+                    </div>
+                    <div class="flex items-start gap-3 mt-4">
+                        <input type="checkbox" class="mt-1 bg-black border-white/20 accent-gold-primary">
+                        <span class="text-xs text-gray-500 font-data">I UNDERSTAND A $2,500 NON-REFUNDABLE DEPOSIT IS REQUIRED TO START BIO-SEQUENCING.</span>
+                    </div>
+                    
+                    <button class="w-full bg-gold-primary hover:bg-white text-black font-bold py-6 font-data tracking-widest transition-colors mt-8">
+                        REQUEST INVITATION
+                    </button>
+                </form>
+                
+                <div class="mt-8 flex justify-center gap-8 opacity-50">
+                    <div class="h-8 w-12 border border-white/20 flex items-center justify-center text-[10px] text-gray-400">VISA</div>
+                    <div class="h-8 w-12 border border-white/20 flex items-center justify-center text-[10px] text-gray-400">BTC</div>
+                    <div class="h-8 w-12 border border-white/20 flex items-center justify-center text-[10px] text-gray-400">WIRE</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-void border-t border-white/10 py-12">
+      <div class="max-w-[1800px] mx-auto px-8 grid md:grid-cols-4 gap-8">
+        <div class="col-span-2">
+          <span class="font-luxury font-bold text-white text-2xl">SVGN<span class="text-gold-primary">SYSTEMS</span></span>
+          <p class="font-data text-xs text-gray-500 mt-4 max-w-md leading-relaxed">
+             SVGN Systems is a private entity registered in Estonia. We provide information security and biological intelligence for high-net-worth clients. We maintain strict client confidentiality.
+          </p>
+        </div>
+        <div>
+           <h4 class="font-data text-gold-primary text-xs tracking-widest mb-4">LEGAL</h4>
+           <ul class="space-y-2 font-data text-xs text-gray-500">
+             <li><a href="#" class="hover:text-white">PRIVACY PROTOCOLS</a></li>
+             <li><a href="#" class="hover:text-white">TERMS OF SERVICE</a></li>
+             <li><a href="#" class="hover:text-white">MEDICAL DISCLAIMER</a></li>
+           </ul>
+        </div>
+        <div>
+           <h4 class="font-data text-gold-primary text-xs tracking-widest mb-4">CONTACT</h4>
+           <ul class="space-y-2 font-data text-xs text-gray-500">
+             <li>SECURE@SVGNSYSTEMS.COM</li>
+             <li>PGP KEY: 0x4A91...</li>
+           </ul>
+        </div>
+      </div>
+      <div class="max-w-[1800px] mx-auto px-8 mt-12 pt-8 border-t border-white/5 flex justify-between font-data text-[10px] text-gray-600">
+         <div>© 2025 SVGN SYSTEMS. ALL RIGHTS RESERVED.</div>
+         <div>SYSTEM VERSION: 4.2.0</div>
+      </div>
+    </footer>
+</body>
+</html>

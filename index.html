@@ -52,6 +52,10 @@
       }
     </script>
     <style>
+      html {
+        scroll-padding-top: 120px; /* Ensures sticky header doesn't cover content */
+        scroll-behavior: smooth;
+      }
       body {
         background-color: #000000;
         color: #e5e5e5;
@@ -121,7 +125,7 @@
     
     <!-- Scrolling Data Header -->
     <div class="fixed top-0 w-full h-6 bg-bunker-panel border-b border-white/5 z-50 flex items-center">
-      <div class="marquee-container w-full font-data text-[9px] text-gray-600 tracking-widest">
+      <div class="marquee-container w-full font-data text-[9px] text-gray-600 tracking-widest pointer-events-none">
         <div class="marquee-content">
           SYS.STATUS: ONLINE // ENCRYPTION: QUANTUM-RESISTANT // LATENCY: 0.0MS // BIO-LOCK: ACTIVE // SATELLITE: DISCONNECTED // AIR-GAP: CONFIRMED // POWER: 100% // DEPLOYMENT: GLOBAL // PROTOCOL: OMEGA // SECURITY LEVEL: 5 // DNA SEQUENCER: READY // PSYCH-EVAL: REQUIRED // 
           SYS.STATUS: ONLINE // ENCRYPTION: QUANTUM-RESISTANT // LATENCY: 0.0MS // BIO-LOCK: ACTIVE // SATELLITE: DISCONNECTED // AIR-GAP: CONFIRMED // POWER: 100% // DEPLOYMENT: GLOBAL // PROTOCOL: OMEGA // SECURITY LEVEL: 5 // DNA SEQUENCER: READY // PSYCH-EVAL: REQUIRED //
@@ -130,7 +134,7 @@
     </div>
 
     <!-- Main Navigation -->
-    <nav class="fixed top-6 w-full z-40 bg-void/90 backdrop-blur-xl border-b border-white/10">
+    <nav class="fixed top-6 w-full z-40 bg-void/90 backdrop-blur-xl border-b border-white/10 pointer-events-auto">
       <div class="max-w-[1800px] mx-auto px-8 h-24 flex items-center justify-between">
         <div class="flex items-center gap-4">
           <div class="w-10 h-10 border border-gold-primary relative flex items-center justify-center">

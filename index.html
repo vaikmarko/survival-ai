@@ -427,7 +427,7 @@
 
           <!-- Defense: Top Right Quadrant (Row 1) -->
           <div class="md:col-span-2 lg:col-span-6 lg:row-span-1 bg-bunker-panel border border-white/10 relative overflow-hidden group">
-             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542259681-d2182e0d771b?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
              <div class="relative z-10 p-8 h-full flex flex-col justify-between">
                <div class="flex justify-between items-start">
                  <h3 class="font-luxury text-2xl text-white">TACTICAL DEFENSE</h3>
@@ -465,7 +465,7 @@
 
           <!-- Engineering (Row 2 Right) -->
           <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
-             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581092921461-eab62e97a782?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
              <div class="relative z-10 p-6 h-full flex flex-col">
                <div class="flex justify-between mb-4">
                  <span class="font-luxury text-lg text-white">ENGINEERING</span>
@@ -497,7 +497,7 @@
 
            <!-- Marine & Aviation (Row 3 Right) -->
            <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1500930248553-70db0952bc51?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1559628230-409b02283c59?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
             <div class="relative z-10 p-6 h-full flex flex-col">
               <div class="flex justify-between mb-4">
                 <span class="font-luxury text-lg text-white">MARINE & AVIATION</span>
@@ -606,19 +606,19 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="font-data text-[10px] text-gold-primary tracking-widest mb-2 block">NAME</label>
-                            <input type="text" class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
+                            <input type="text" name="name" required class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
                         </div>
                         <div>
                             <label class="font-data text-[10px] text-gold-primary tracking-widest mb-2 block">OFFICIAL EMAIL</label>
-                            <input type="email" class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
+                            <input type="email" name="email" required class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
                         </div>
                     </div>
                     <div>
                         <label class="font-data text-[10px] text-gold-primary tracking-widest mb-2 block">COUNTRY OF RESIDENCE (FOR LOGISTICS)</label>
-                        <input type="text" class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
+                        <input type="text" name="country" class="w-full bg-black border border-white/20 p-4 text-white font-ui focus:border-gold-primary outline-none transition-colors">
                     </div>
                     <div class="flex items-start gap-3 mt-4">
-                        <input type="checkbox" class="mt-1 bg-black border-white/20 accent-gold-primary">
+                        <input type="checkbox" name="deposit_acknowledged" required class="mt-1 bg-black border-white/20 accent-gold-primary">
                         <span class="text-xs text-gray-500 font-data">I UNDERSTAND A $2,500 NON-REFUNDABLE DEPOSIT IS REQUIRED TO START BIO-SEQUENCING.</span>
                     </div>
                     
@@ -679,15 +679,44 @@
             const btn = document.getElementById('submit-btn');
             const msg = document.getElementById('success-message');
             const form = this;
+            const originalBtnText = btn.innerHTML;
             
-            // Simulate processing
-            btn.innerHTML = "ENCRYPTING DATA...";
+            // Visual feedback
+            btn.innerHTML = "ENCRYPTING & TRANSMITTING...";
             btn.classList.add('opacity-50', 'cursor-not-allowed');
             
-            setTimeout(() => {
-                form.classList.add('hidden');
-                msg.classList.remove('hidden');
-            }, 1500);
+            const formData = new FormData(form);
+
+            fetch("https://formspree.io/f/xanzazbd", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // Success animation
+                    setTimeout(() => {
+                        form.classList.add('hidden');
+                        msg.classList.remove('hidden');
+                    }, 1000);
+                } else {
+                    // Error handling
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            alert(data["errors"].map(error => error["message"]).join(", "));
+                        } else {
+                            alert("System Error: Transmission failed. Please try again.");
+                        }
+                        btn.innerHTML = originalBtnText;
+                        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    });
+                }
+            }).catch(error => {
+                alert("Network Error: Connection to secure server failed.");
+                btn.innerHTML = originalBtnText;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            });
         });
     </script>
 </body>

@@ -427,14 +427,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 lg:grid-rows-3 gap-6 h-auto lg:h-[900px]">
           
           <!-- Medical: Left Half (Full Height - 3 Rows) -->
-          <div class="md:col-span-2 lg:col-span-6 lg:row-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group flex flex-col">
+          <div class="md:col-span-2 lg:col-span-6 lg:row-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group flex flex-col min-h-[600px] lg:min-h-0">
              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
              <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
              
              <!-- Content -->
-             <div class="relative z-10 p-10 h-full flex flex-col justify-between">
-               <div class="flex justify-between items-start">
-                 <h3 class="font-luxury text-3xl text-white">ADVANCED BIOMEDICAL</h3>
+             <div class="relative z-10 p-6 md:p-10 h-full flex flex-col justify-between">
+               <div class="flex justify-between items-start mb-8 md:mb-0">
+                 <h3 class="font-luxury text-2xl md:text-3xl text-white">ADVANCED BIOMEDICAL</h3>
                  <span class="text-gold-primary font-data text-2xl animate-pulse">✚</span>
                </div>
                
@@ -457,14 +457,14 @@
           </div>
 
           <!-- Defense: Top Right Quadrant (Row 1) -->
-          <div class="md:col-span-2 lg:col-span-6 lg:row-span-1 bg-bunker-panel border border-white/10 relative overflow-hidden group">
+          <div class="md:col-span-2 lg:col-span-6 lg:row-span-1 bg-bunker-panel border border-white/10 relative overflow-hidden group min-h-[300px] lg:min-h-0">
              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595878715977-2e8f8df18ea8?auto=format&fit=crop&q=80&w=800&v=2')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
-             <div class="relative z-10 p-8 h-full flex flex-col justify-between">
-               <div class="flex justify-between items-start">
-                 <h3 class="font-luxury text-2xl text-white">TACTICAL DEFENSE</h3>
+             <div class="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
+               <div class="flex justify-between items-start mb-4 md:mb-0">
+                 <h3 class="font-luxury text-xl md:text-2xl text-white">TACTICAL DEFENSE</h3>
                  <span class="text-alert-red font-data text-xl">⌖</span>
                </div>
-               <div class="flex gap-8 mt-4">
+               <div class="flex flex-col md:flex-row gap-8 mt-4">
                   <p class="text-gray-400 text-sm max-w-xs">Military-grade autonomous surveillance integration. Includes thermal perimeter scanning, drone pathing algorithms, and counter-measure deployment protocols.</p>
                   <div class="flex-1 grid grid-cols-2 gap-2 font-data text-[10px] text-gray-500">
                     <div class="border-l border-alert-red/30 pl-2">AUTONOMOUS DRONE OPS</div>
@@ -479,7 +479,7 @@
           <!-- The Quartet: Middle & Bottom Right -->
           
           <!-- Hydroponics (Row 2 Left) -->
-          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors min-h-[250px] lg:min-h-0">
              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
              <div class="relative z-10 p-6 h-full flex flex-col">
                <div class="flex justify-between mb-4">
@@ -495,7 +495,7 @@
           </div>
 
           <!-- Engineering (Row 2 Right) -->
-          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors min-h-[250px] lg:min-h-0">
              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600&v=2')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
              <div class="relative z-10 p-6 h-full flex flex-col">
                <div class="flex justify-between mb-4">
@@ -511,7 +511,7 @@
           </div>
 
           <!-- Chemistry (Row 3 Left) -->
-          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+          <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors min-h-[250px] lg:min-h-0">
              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
              <div class="relative z-10 p-6 h-full flex flex-col">
                <div class="flex justify-between mb-4">
@@ -527,7 +527,7 @@
           </div>
 
            <!-- Marine & Aviation (Row 3 Right) -->
-           <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors">
+           <div class="md:col-span-1 lg:col-span-3 bg-bunker-panel border border-white/10 relative overflow-hidden group hover:border-white/20 transition-colors min-h-[250px] lg:min-h-0">
             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center opacity-5 group-hover:opacity-15 transition-opacity duration-500"></div>
             <div class="relative z-10 p-6 h-full flex flex-col">
               <div class="flex justify-between mb-4">

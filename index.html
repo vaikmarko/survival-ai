@@ -24,6 +24,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230a0a0a%22/><rect x=%2220%22 y=%2220%22 width=%2260%22 height=%2260%22 fill=%22none%22 stroke=%22%23C6A87C%22 stroke-width=%225%22/><rect x=%2245%22 y=%2245%22 width=%2210%22 height=%2210%22 fill=%22%23C6A87C%22/></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=JetBrains+Mono:wght@100;300;400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
@@ -152,7 +153,7 @@
     </div>
 
     <!-- Main Navigation -->
-    <nav class="fixed top-6 w-full z-40 bg-void/90 backdrop-blur-xl border-b border-white/10 pointer-events-auto">
+    <nav class="fixed top-6 w-full z-40 bg-void/90 backdrop-blur-xl border-b border-white/10 pointer-events-auto" x-data="{ open: false }">
       <div class="max-w-[1800px] mx-auto px-8 h-24 flex items-center justify-between">
         <div class="flex items-center gap-4">
           <div class="w-10 h-10 border border-gold-primary relative flex items-center justify-center">
@@ -165,6 +166,7 @@
           </div>
         </div>
         
+        <!-- Desktop Menu -->
         <div class="hidden xl:flex gap-16 font-data text-xs tracking-[0.2em] text-gray-500">
           <a href="#philosophy" class="hover:text-gold-primary transition-colors">PHILOSOPHY</a>
           <a href="#bio-integration" class="hover:text-gold-primary transition-colors flex items-center gap-2">
@@ -174,10 +176,39 @@
           <a href="#protocol" class="hover:text-gold-primary transition-colors">PROTOCOL</a>
         </div>
 
-        <a href="#application" class="relative group overflow-hidden bg-white/5 px-8 py-3 border border-gold-primary/30 hover:border-gold-primary transition-all">
+        <!-- Mobile Menu Button -->
+        <div class="xl:hidden">
+             <button @click="open = !open" class="text-white focus:outline-none p-2">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+                 </svg>
+             </button>
+        </div>
+
+        <a href="#application" class="hidden xl:block relative group overflow-hidden bg-white/5 px-8 py-3 border border-gold-primary/30 hover:border-gold-primary transition-all">
           <span class="font-data text-xs text-gold-primary tracking-[0.2em] group-hover:text-white relative z-10">INITIATE APPLICATION</span>
           <div class="absolute inset-0 bg-gold-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
         </a>
+      </div>
+      
+      <!-- Mobile Menu Panel -->
+      <div x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 -translate-y-2"
+           x-transition:enter-end="opacity-100 translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 translate-y-0"
+           x-transition:leave-end="opacity-0 -translate-y-2"
+           class="xl:hidden bg-bunker-dark border-b border-white/10">
+           <div class="flex flex-col p-6 space-y-6 font-data text-sm tracking-[0.2em] text-gray-400">
+               <a href="#philosophy" @click="open = false" class="hover:text-gold-primary transition-colors">PHILOSOPHY</a>
+               <a href="#bio-integration" @click="open = false" class="hover:text-gold-primary transition-colors flex items-center gap-2">
+                <span class="w-1 h-1 bg-gold-primary rounded-full animate-pulse"></span> BIO-INTEGRATION
+              </a>
+              <a href="#intelligence" @click="open = false" class="hover:text-gold-primary transition-colors">INTELLIGENCE</a>
+              <a href="#protocol" @click="open = false" class="hover:text-gold-primary transition-colors">PROTOCOL</a>
+              <a href="#application" @click="open = false" class="text-gold-primary border border-gold-primary/30 p-3 text-center bg-white/5">INITIATE APPLICATION</a>
+           </div>
       </div>
     </nav>
 
@@ -208,7 +239,7 @@
           </p>
           
           <div class="flex flex-col sm:flex-row gap-6">
-            <a href="#application" class="bg-gold-primary text-black px-10 py-5 font-data font-bold text-sm tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-3">
+            <a href="#application" class="bg-gold-primary text-black px-10 py-5 font-data font-bold text-sm tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-3 text-center">
               REQ. ALLOCATION ($25,000)
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </a>

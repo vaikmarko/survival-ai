@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVGN Systems | Ad Studio V2 (ELITE)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=JetBrains+Mono:wght@100;300;400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'void': '#000000',
+              'gold-primary': '#C6A87C',
+              'terminal-green': '#00FF41',
+              'alert-red': '#FF0000',
+              'concrete': '#1a1a1a'
+            },
+            fontFamily: {
+              'luxury': ['Cinzel', 'serif'],
+              'data': ['JetBrains Mono', 'monospace'],
+              'ui': ['Rajdhani', 'sans-serif'],
+            },
+            spacing: {
+                '128': '32rem',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body { background-color: #050505; color: white; padding: 40px; }
+        .ad-container { margin-bottom: 80px; }
+        .ad-label { font-family: 'JetBrains Mono'; color: #444; margin-bottom: 15px; display: block; text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; border-left: 2px solid #C6A87C; padding-left: 10px; }
+        
+        /* --- ELITE EFFECTS --- */
+
+        /* CRT Scanline Overlay */
+        .crt-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.6;
+        }
+
+        /* Noise Texture */
+        .noise-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: 1;
+            mix-blend-mode: overlay;
+        }
+
+        /* Redacted Text Effect */
+        .redacted {
+            background: white;
+            color: white;
+            padding: 0 4px;
+            position: relative;
+        }
+        .redacted::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: black;
+            opacity: 0.95; /* Slightly visible through */
+        }
+
+        /* Glitch Animation */
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(12px, 9999px, 26px, 0); }
+            20% { clip: rect(55px, 9999px, 11px, 0); }
+            40% { clip: rect(3px, 9999px, 88px, 0); }
+            60% { clip: rect(67px, 9999px, 2px, 0); }
+            80% { clip: rect(23px, 9999px, 45px, 0); }
+            100% { clip: rect(89px, 9999px, 13px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 98px, 0); }
+            20% { clip: rect(3px, 9999px, 33px, 0); }
+            40% { clip: rect(34px, 9999px, 12px, 0); }
+            60% { clip: rect(99px, 9999px, 55px, 0); }
+            80% { clip: rect(11px, 9999px, 78px, 0); }
+            100% { clip: rect(21px, 9999px, 4px, 0); }
+        }
+
+        .capture-frame {
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            border: 1px solid #222;
+        }
+        
+        .warning-stripe {
+            background: repeating-linear-gradient(
+              45deg,
+              #000,
+              #000 10px,
+              #1a1a1a 10px,
+              #1a1a1a 20px
+            );
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="font-luxury text-4xl text-white mb-2">AD STUDIO <span class="text-gold-primary">V2 // CLASSIFIED</span></h1>
+    <p class="font-data text-gray-500 text-xs mb-12 tracking-widest">
+        VISUAL LEVEL: MAXIMAL // TONE: HOSTILE // STATUS: UNRELEASED
+    </p>
+
+    <!-- AD 1: "THE DOSSIER" (Story) -->
+    <div class="ad-container">
+        <span class="ad-label">FORMAT: 9:16 STORY // THEME: "EYES ONLY"</span>
+        <div class="capture-frame bg-void relative flex flex-col" style="width: 450px; height: 800px;">
+            <div class="crt-overlay"></div>
+            <div class="noise-bg"></div>
+
+            <!-- Content -->
+            <div class="relative z-10 h-full flex flex-col p-8 border-[10px] border-white/5">
+                
+                <!-- Header -->
+                <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-12">
+                    <div class="font-data text-[9px] text-gray-500 leading-tight">
+                        DOC_REF: #884-A<br>
+                        CLEARANCE: OMEGA
+                    </div>
+                    <div class="bg-alert-red text-black font-ui font-bold text-xs px-2 py-1">EYES ONLY</div>
+                </div>
+
+                <!-- Main Visual Typography -->
+                <div class="mb-auto relative">
+                    <div class="absolute -left-4 top-0 h-full w-[1px] bg-gold-primary/50"></div>
+                    <h2 class="font-luxury text-5xl text-white leading-[0.85] mb-6 mix-blend-difference">
+                        THE<br>SYSTEM<br>IS<br><span class="text-transparent text-stroke-white text-stroke-1">FRAGILE</span>
+                    </h2>
+                    
+                    <div class="font-data text-[10px] text-gray-400 leading-loose max-w-[80%]">
+                        YOUR WEALTH IS <span class="redacted">VISIBLE</span>. <br>
+                        YOUR ASSETS ARE <span class="redacted">TRACKED</span>. <br>
+                        YOUR SURVIVAL IS <span class="bg-white text-black px-1">NEGOTIABLE</span>.
+                    </div>
+                </div>
+
+                <!-- Graphic Element -->
+                <div class="absolute right-0 top-1/3 w-32 h-32 opacity-20">
+                    <img src="logo_icon.svg" class="w-full h-full filter invert">
+                </div>
+
+                <!-- Bottom -->
+                <div class="border-t border-white/20 pt-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-2 h-2 bg-terminal-green animate-pulse"></div>
+                        <div class="font-data text-xs text-terminal-green tracking-widest glitch-text" data-text="INITIATE PROTOCOL">INITIATE PROTOCOL</div>
+                    </div>
+                    <div class="font-ui text-3xl text-gold-primary font-bold">$25,000.00</div>
+                    <div class="font-data text-[8px] text-gray-600 mt-2">ALLOCATION: 3 UNITS REMAINING</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AD 2: "THE BLACKOUT" (Feed) -->
+    <div class="ad-container">
+        <span class="ad-label">FORMAT: 4:5 FEED // THEME: "PANIC LOGIC"</span>
+        <div class="capture-frame bg-void relative flex flex-col justify-center items-center" style="width: 540px; height: 675px;">
+            <div class="crt-overlay"></div>
+            <div class="noise-bg"></div>
+            
+            <!-- Background Image Simulation -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-black opacity-50"></div>
+
+            <!-- Central Box -->
+            <div class="relative z-10 border border-gold-primary/40 bg-black/80 backdrop-blur-sm p-12 text-center max-w-md">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gold-primary"></div>
+                
+                <div class="font-data text-alert-red text-xs tracking-[0.3em] mb-6 animate-pulse">WARNING: GRID INSTABILITY</div>
+                
+                <h2 class="font-ui text-4xl font-bold text-white mb-6 uppercase leading-none">
+                    Don't die<br>with a full<br>bank account.
+                </h2>
+                
+                <p class="font-data text-[11px] text-gray-400 leading-relaxed mb-8 text-left border-l border-white/20 pl-4">
+                    When the lights go out, your net worth drops to zero. The only currency left is <span class="text-white">operational intelligence</span>.
+                </p>
+
+                <div class="flex justify-center items-center gap-3">
+                    <span class="font-luxury text-gold-primary tracking-widest text-sm border border-gold-primary px-6 py-2 hover:bg-gold-primary hover:text-black transition-colors cursor-pointer">
+                        BECOME SOVEREIGN
+                    </span>
+                </div>
+            </div>
+
+            <!-- Corners -->
+            <div class="absolute top-4 left-4 w-4 h-4 border-l border-t border-white/30"></div>
+            <div class="absolute top-4 right-4 w-4 h-4 border-r border-t border-white/30"></div>
+            <div class="absolute bottom-4 left-4 w-4 h-4 border-l border-b border-white/30"></div>
+            <div class="absolute bottom-4 right-4 w-4 h-4 border-r border-b border-white/30"></div>
+        </div>
+    </div>
+
+    <!-- AD 3: "THE TERMINAL" (Horizontal) -->
+    <div class="ad-container">
+        <span class="ad-label">FORMAT: 16:9 WEB // THEME: "HARDWARE"</span>
+        <div class="capture-frame bg-[#080808] relative flex overflow-hidden" style="width: 800px; height: 450px;">
+            <div class="crt-overlay"></div>
+            
+            <!-- Left: Code Column -->
+            <div class="w-1/3 bg-black border-r border-white/10 p-8 font-data text-[10px] text-terminal-green leading-snug opacity-70 overflow-hidden">
+                <div class="animate-[pulse_4s_infinite]">
+                    > SYSTEM_CHECK... OK<br>
+                    > BIO_SENSORS... CALIBRATING<br>
+                    > DETECTING_DNA... MATCH FOUND<br>
+                    > SUBJECT: ALPHA<br>
+                    > LOAD_MODULE: MEDICAL_SURGERY<br>
+                    > LOAD_MODULE: TACTICAL_DEFENSE<br>
+                    > LOAD_MODULE: HYDROPONICS<br>
+                    > ENCRYPTION: 4096-BIT<br>
+                    > AIR_GAP: CONFIRMED<br>
+                    > ...<br>
+                    > ...<br>
+                    > WAITING FOR INPUT_<br>
+                    <br>
+                    <span class="text-alert-red">! ALERT: EXTERNAL COMMS DOWN</span><br>
+                    <span class="text-alert-red">! ALERT: SATELLITE OFFLINE</span><br>
+                    > SWITCHING TO LOCAL DB...<br>
+                    > 48TB LOADED.
+                </div>
+            </div>
+
+            <!-- Right: Product Focus -->
+            <div class="w-2/3 relative p-12 flex flex-col justify-center">
+                <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_0%,transparent_49%,rgba(198,168,124,0.05)_50%,transparent_51%)] bg-[size:10px_10px]"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex items-center gap-4 mb-2">
+                        <img src="logo_icon.svg" class="w-10 h-10">
+                        <div class="h-10 w-[1px] bg-white/20"></div>
+                        <div class="font-luxury text-2xl text-white">SOVEREIGN OS</div>
+                    </div>
+                    
+                    <h3 class="font-ui text-5xl text-white font-bold mt-4 mb-2">OFF-GRID AI.</h3>
+                    <h4 class="font-ui text-3xl text-gray-500 font-light mb-8">BIO-CALIBRATED.</h4>
+                    
+                    <div class="inline-flex bg-gold-primary text-black font-data font-bold text-xs px-4 py-2 tracking-widest">
+                        MIL-SPEC HARDWARE // $25K
+                    </div>
+                </div>
+
+                <div class="absolute bottom-8 right-8 font-data text-[9px] text-gray-600">
+                    MADE IN ESTONIA // LIMITED RUN
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

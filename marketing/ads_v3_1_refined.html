@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVGN Systems | Ad Studio V3.1 (REFINED)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=JetBrains+Mono:wght@100;300;400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'void': '#050505',
+              'gold-primary': '#C6A87C',
+              'terminal-green': '#00FF41',
+              'alert-red': '#ff3333',
+            },
+            fontFamily: {
+              'luxury': ['Cinzel', 'serif'],
+              'data': ['JetBrains Mono', 'monospace'],
+              'ui': ['Rajdhani', 'sans-serif'],
+            },
+            backgroundImage: {
+                 'grid-pattern': "linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)",
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body { background-color: #111; color: white; padding: 40px; font-family: 'Rajdhani', sans-serif; }
+        .ad-container { margin-bottom: 80px; }
+        .ad-label { font-family: 'JetBrains Mono'; color: #888; margin-bottom: 15px; display: block; text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; border-left: 2px solid #C6A87C; padding-left: 10px; }
+        
+        .capture-frame {
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: 1px solid #333;
+        }
+
+        /* Image filters for "Trust" look */
+        .trust-img {
+            filter: grayscale(100%) contrast(120%) brightness(0.7); /* Made darker for text readability */
+            mix-blend-mode: luminosity;
+        }
+        
+        /* Stronger Gradient Overlay for Ad 1 */
+        .gradient-overlay-strong {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.2) 100%);
+            z-index: 10;
+        }
+
+        .quote-mark {
+            font-family: 'Cinzel', serif;
+            font-size: 80px;
+            color: #C6A87C;
+            line-height: 1;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="font-luxury text-3xl text-white mb-2">AD STUDIO <span class="text-gold-primary">V3.1 // REFINED</span></h1>
+
+    <!-- AD 1: "THE FAMILY LEGACY" (Story/Reels) -->
+    <!-- FIXED: Text readability improved with darker overlay and gradient -->
+    <div class="ad-container">
+        <span class="ad-label">FORMAT: 9:16 STORY // THEME: "LEGACY PROTECTION"</span>
+        <div class="capture-frame bg-void relative flex flex-col justify-end" style="width: 450px; height: 800px;">
+            
+            <!-- Background Image -->
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover trust-img">
+            
+            <!-- Strong Gradient Overlay for Readability -->
+            <div class="gradient-overlay-strong"></div>
+            
+            <!-- Top Badge -->
+            <div class="absolute top-8 left-8 z-20 bg-black/80 backdrop-blur border border-white/10 px-4 py-2 flex items-center gap-2">
+                <img src="logo_icon.svg" class="w-4 h-4">
+                <span class="font-data text-[10px] text-white tracking-widest">SVGN PROTECTION</span>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-20 p-8 pb-12">
+                <div class="quote-mark">"</div>
+                <!-- Added text shadow for extra pop -->
+                <h2 class="font-luxury text-3xl text-white leading-tight -mt-6 mb-6 relative drop-shadow-xl">
+                    I don't fear the collapse.<br>
+                    I fear being <span class="text-gold-primary italic">unprepared</span> for it.
+                </h2>
+                
+                <!-- Social Proof Box -->
+                <div class="flex items-center gap-4 mb-8 border-l-2 border-gold-primary pl-4 bg-black/30 p-4 rounded backdrop-blur-sm">
+                    <div class="w-10 h-10 rounded-full bg-gray-800 overflow-hidden border border-white/20 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <div>
+                        <div class="font-ui text-white font-bold text-sm">A.R.</div>
+                        <div class="font-data text-[9px] text-gray-400">HEDGE FUND MANAGER // ZURICH</div>
+                    </div>
+                </div>
+
+                <div class="bg-white text-black text-center font-ui font-bold text-sm py-4 tracking-widest hover:bg-gold-primary transition-colors cursor-pointer">
+                    SECURE YOUR LEGACY
+                </div>
+                <div class="text-center mt-3 font-data text-[9px] text-gray-400">
+                    ONLY 50 UNITS AVAILABLE Q1
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- AD 2: "THE REALITY CHECK" (Feed/Square) -->
+    <!-- Kept as is, user liked it -->
+    <div class="ad-container">
+        <span class="ad-label">FORMAT: 1:1 SQUARE // THEME: "HARD TRUTH" (UNCHANGED)</span>
+        <div class="capture-frame bg-void relative flex flex-col" style="width: 600px; height: 600px;">
+            <img src="https://images.unsplash.com/photo-1485217988980-11786ced9454?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover trust-img" style="object-position: top;">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent z-10"></div> <!-- Slightly Darker -->
+            
+            <div class="relative z-20 w-2/3 h-full p-10 flex flex-col justify-center">
+                <div class="font-data text-gold-primary text-xs tracking-[0.3em] mb-4 uppercase">
+                    The Knowledge Gap
+                </div>
+                
+                <h2 class="font-luxury text-4xl text-white mb-6 leading-none drop-shadow-lg">
+                    YOUR PILOT<br>WON'T BE THERE.<br>
+                    YOUR DOCTOR<br>WON'T BE THERE.
+                </h2>
+                
+                <p class="font-ui text-gray-300 text-lg mb-8 leading-relaxed drop-shadow-md">
+                    When the grid fails, your network of experts disappears. You are left with what you know.
+                </p>
+                
+                <div class="flex gap-4 items-center">
+                    <div class="border border-white/30 px-6 py-3 text-white font-data text-xs hover:bg-white hover:text-black transition-colors">
+                        CLOSE THE GAP
+                    </div>
+                    <div class="font-luxury text-xl text-white">SVGN</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- AD 3: "THE ARTIFACT" (Wide/Header) -->
+    <!-- FIXED: Removed Estonia/Confusing details. Cleaned up message. -->
+    <div class="ad-container">
+        <span class="ad-label">FORMAT: 16:9 WEB // THEME: "ULTIMATE INSURANCE"</span>
+        <div class="capture-frame bg-[#111] relative flex items-center justify-center" style="width: 800px; height: 450px;">
+            
+            <div class="absolute inset-0 bg-grid-pattern bg-[size:40px_40px] opacity-20"></div>
+            
+            <!-- Central Product Stage -->
+            <div class="relative z-10 text-center">
+                <div class="inline-block mb-8 relative">
+                    <!-- Abstract representation of the device glowing -->
+                    <div class="w-64 h-40 bg-black border border-gray-700 rounded shadow-2xl flex items-center justify-center relative overflow-hidden group mx-auto">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent"></div>
+                        
+                        <!-- Simple, clear screen message -->
+                        <div class="text-center">
+                            <div class="text-terminal-green font-data text-xs mb-2 animate-pulse uppercase">WORKS WHEN</div>
+                            <div class="text-white font-luxury text-xl uppercase">THE INTERNET</div>
+                            <div class="text-alert-red font-data text-sm uppercase">DIES</div>
+                        </div>
+
+                        <!-- Reflection -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-gold-primary/10 to-transparent opacity-50"></div>
+                    </div>
+                    <!-- Glow under device -->
+                    <div class="absolute -bottom-10 left-0 right-0 h-20 bg-gold-primary/20 blur-[50px]"></div>
+                </div>
+
+                <!-- Stronger, clearer headline -->
+                <h2 class="font-luxury text-3xl text-white tracking-[0.2em] mb-2">THE FINAL ASSET CLASS</h2>
+                <div class="h-[1px] w-20 bg-gold-primary mx-auto mb-4"></div>
+                
+                <p class="font-ui text-gray-400 max-w-md mx-auto text-sm leading-relaxed mb-8">
+                    Non-Correlated. Zero Counterparty Risk. <br>
+                    <span class="text-white">The only wealth that matters when the system stops working.</span>
+                </p>
+
+                <div class="inline-flex items-center gap-8 font-data text-[10px] text-gray-500 uppercase tracking-widest border border-white/10 px-6 py-2 bg-black/50 backdrop-blur">
+                    <span class="text-white">NO INTERNET NEEDED</span>
+                    <span class="w-[1px] h-3 bg-white/20"></span>
+                    <span class="text-white">MILITARY GRADE</span>
+                    <span class="w-[1px] h-3 bg-white/20"></span>
+                    <span class="text-gold-primary">$25,000 USD</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
